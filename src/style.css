@@ -1,0 +1,123 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+svg {
+  width: 200px;
+  position: relative;
+  z-index: 10;
+}
+
+#heart {
+  fill: #eee;
+  stroke-width: 20px;
+  stroke: red;
+  stroke-dasharray: 1600;
+  stroke-dashoffset: 1600;
+  stroke-linecap: round;
+}
+
+span, span::after {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  
+  box-shadow: 0 -160px 0 red, 0 160px 0 red, -160px 0 0 red, 160px 0 0 red;
+}
+
+span::after {
+  content: '';
+  transform: translate(-50%, -50%) rotate(45deg) scale(0);
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+label {
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + svg #heart {
+  animation: 1s draw-heart linear forwards;
+}
+
+@keyframes draw-heart {
+  0% {
+    stroke-dashoffset: 1600;
+  }
+  80% {
+    stroke-dashoffset: 0;
+    fill: #eee;
+  }
+  100% {
+    fill: red;
+    stroke-dashoffset: 0;
+  }
+}
+
+input[type="checkbox"]:checked ~ span {
+  animation: .5s blink ease-in-out forwards .85s;
+}
+
+input[type="checkbox"]:checked ~ span::after {
+  animation: .5s blink-after ease-in-out forwards .85s;
+}
+
+@keyframes blink {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: .8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: .8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes blink-after {
+  0% {
+    transform: translate(-50%, -50%) rotate(45deg) scale(0.5);
+    opacity: .8;
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
+    opacity: .8;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1.1);
+    opacity: 0;
+  }
+}
+
+input[type="checkbox"]:checked + svg {
+  animation: 1s pop linear forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
